@@ -173,7 +173,7 @@ func TestAdaptorI2cRead(t *testing.T) {
 	i2cReply := client.I2cReply{Data: i}
 	go func() {
 		<-time.After(10 * time.Millisecond)
-		a.Publish(a.board.Event("I2cReply"), i2cReply)
+		a.board.Publish(a.board.Event("I2cReply"), i2cReply)
 	}()
 	data, err := a.I2cRead(0x00, 1)
 	gobottest.Assert(t, err, nil)

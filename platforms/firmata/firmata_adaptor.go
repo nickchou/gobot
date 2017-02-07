@@ -23,7 +23,7 @@ type firmataBoard interface {
 	I2cWrite(int, []byte) error
 	I2cConfig(int) error
 	ServoConfig(int, int, int) error
-	Event(string) string
+	gobot.Eventer
 }
 
 // Adaptor is the Gobot Adaptor for Firmata based boards
@@ -233,7 +233,7 @@ func (f *Adaptor) I2cRead(address int, size int) (data []byte, err error) {
 		return
 	}
 
-	f.Once(f.board.Event("I2cReply"), func(data interface{}) {
+	f.board.Once(f.board.Event("I2cReply"), func(data interface{}) {
 		ret <- data.(client.I2cReply).Data
 	})
 
